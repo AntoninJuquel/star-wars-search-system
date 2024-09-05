@@ -22,6 +22,11 @@ export default function SearchResult() {
   if (data) {
     if (collection) {
       const collectionData = data as CollectionData;
+      if (collectionData.results.length === 0) {
+        return (
+          <div id="search-result">No results found. Please try again.</div>
+        );
+      }
       const totalPages = calculateTotalPages(collectionData.count);
       return (
         <div
@@ -58,6 +63,11 @@ export default function SearchResult() {
           (key) => collectionRecords[key].count || 0
         )
       );
+      if (maxCount === 0) {
+        return (
+          <div id="search-result">No results found. Please try again.</div>
+        );
+      }
       const totalPages = calculateTotalPages(maxCount);
       return (
         <div
