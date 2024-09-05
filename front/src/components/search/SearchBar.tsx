@@ -13,7 +13,7 @@ import { useCallback, useEffect, useState } from "react";
 import { Search } from "lucide-react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 import { LoaderData } from "@/models/LoaderData";
-import { useDebounce } from "use-debounce";
+import { useDebouncedCallback } from "use-debounce";
 
 const collections = [
   "all",
@@ -28,7 +28,6 @@ const collections = [
 export default function SearchBar() {
   const [search, setSearch] = useState("");
   const [collection, setCollection] = useState(collections[0]);
-  const [debouncedSearch] = useDebounce(search, 1000);
   const navigate = useNavigate();
 
   const handleSearch = useCallback(
@@ -62,9 +61,12 @@ export default function SearchBar() {
     }
   }, [loaderData]);
 
-  useEffect(() => {
-    handleSearch(collection, debouncedSearch);
-  }, [debouncedSearch, collection, handleSearch]);
+  const debouncedSearch = useDebouncedCallback(
+    (collection: string, search: string) => {
+      handleSearch(collection, search);
+    },
+    500
+  );
 
   return (
     <div id="searchbar">
@@ -77,7 +79,10 @@ export default function SearchBar() {
                   id="search"
                   placeholder="Browse the Empire database"
                   value={search}
-                  onChange={(e) => setSearch(e.target.value)}
+                  onChange={(e) => {
+                    setSearch(e.target.value);
+                    debouncedSearch(collection, e.target.value);
+                  }}
                 />
                 <Button variant="outline" type="submit" size="icon">
                   <Search className="w-4 h-4" />
@@ -85,7 +90,13 @@ export default function SearchBar() {
               </div>
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor="collection">Collection</Label>
-                <Select onValueChange={setCollection} value={collection}>
+                <Select
+                  onValueChange={(value) => {
+                    setCollection(value);
+                    handleSearch(value, search);
+                  }}
+                  value={collection}
+                >
                   <SelectTrigger id="collection" className="w-[180px]">
                     <SelectValue placeholder="Select" />
                   </SelectTrigger>
