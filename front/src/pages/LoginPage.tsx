@@ -28,8 +28,13 @@ export default function LoginPage() {
   return (
     <div
       id="login-page"
-      className="h-screen w-screen flex items-center justify-center"
+      className="h-screen w-screen flex flex-col items-center justify-center"
     >
+      <img
+        src="/rebel_alliance_logo.svg"
+        alt="Rebel logo"
+        className="w-[200px] invert absolute top-4 mx-auto"
+      />
       <Card className="w-[350px]">
         <form onSubmit={handleLogin}>
           <CardHeader>
