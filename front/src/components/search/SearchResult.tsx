@@ -5,8 +5,6 @@ import {
   PaginationContent,
   PaginationItem,
   PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
 } from "@/components/ui/pagination";
 import { getNavigationUrl } from "@/lib/utils";
 import SearchItem from "./SearchItem";
@@ -37,11 +35,6 @@ export default function SearchResult() {
           </div>
           <Pagination>
             <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious
-                  href={getNavigationUrl(collectionData.previous as string)}
-                />
-              </PaginationItem>
               {Array.from({ length: totalPages }, (_, index) => index + 1).map(
                 (pageNumber) => (
                   <PaginationItem key={pageNumber}>
@@ -54,11 +47,6 @@ export default function SearchResult() {
                   </PaginationItem>
                 )
               )}
-              <PaginationItem>
-                <PaginationNext
-                  href={getNavigationUrl(collectionData.next as string)}
-                />
-              </PaginationItem>
             </PaginationContent>
           </Pagination>
         </div>
@@ -96,14 +84,6 @@ export default function SearchResult() {
           </div>
           <Pagination>
             <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious
-                  href={getNavigationUrl(
-                    location.href,
-                    parseInt(page || "1") - 1
-                  )}
-                />
-              </PaginationItem>
               {Array.from({ length: totalPages }, (_, index) => index + 1).map(
                 (pageNumber) => (
                   <PaginationItem key={pageNumber}>
@@ -116,14 +96,6 @@ export default function SearchResult() {
                   </PaginationItem>
                 )
               )}
-              <PaginationItem>
-                <PaginationNext
-                  href={getNavigationUrl(
-                    location.href,
-                    parseInt(page || "1") + 1
-                  )}
-                />
-              </PaginationItem>
             </PaginationContent>
           </Pagination>
         </div>
