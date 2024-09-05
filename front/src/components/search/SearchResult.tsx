@@ -1,5 +1,5 @@
 import { useLoaderData, useNavigate } from "react-router-dom";
-import { CollectionData, Data, LoaderData } from "@/models/LoaderData";
+import { CollectionData, LoaderData } from "@/models/LoaderData";
 import {
   Pagination,
   PaginationContent,
@@ -8,28 +8,13 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
-import { Film } from "@/models/Film";
 import { getNavigationUrl } from "@/lib/utils";
+import SearchItem from "./SearchItem";
+import { SectionTitle } from "@/components/common/SectionTitle";
 
 function calculateTotalPages(count: number) {
   const totalPages = Math.ceil(count / 10);
   return totalPages;
-}
-
-function ItemRenderer(
-  item: Data,
-  index: number,
-  navigate: (to: string) => void
-) {
-  return (
-    <div
-      key={index}
-      className="p-4 border-b border-gray-800"
-      onClick={() => navigate(getNavigationUrl(item.url).slice(0, -1))}
-    >
-      {(item as Film).title || (item as Exclude<Data, Film>).name}
-    </div>
-  );
 }
 
 export default function SearchResult() {
@@ -45,9 +30,9 @@ export default function SearchResult() {
           id="search-result"
           className="flex flex-col flex-grow overflow-y-auto"
         >
-          <div className="flex-grow">
+          <div className="flex-grow p-2">
             {collectionData.results.map((item, index) =>
-              ItemRenderer(item, index, navigate)
+              SearchItem(item, index, navigate)
             )}
           </div>
           <Pagination>
@@ -91,7 +76,7 @@ export default function SearchResult() {
           id="search-result"
           className="flex flex-col flex-grow overflow-y-auto"
         >
-          <div className="flex-grow">
+          <div className="flex-grow p-2">
             {Object.keys(collectionRecords).map((key, index) => {
               if (!collectionRecords[key].results) {
                 return null;
@@ -101,9 +86,9 @@ export default function SearchResult() {
               }
               return (
                 <div key={index}>
-                  <h2 className="text-xl font-bold">{key.toUpperCase()}</h2>
+                  <SectionTitle>{key.toUpperCase()}</SectionTitle>
                   {collectionRecords[key].results.map((item, index) =>
-                    ItemRenderer(item, index, navigate)
+                    SearchItem(item, index, navigate)
                   )}
                 </div>
               );
