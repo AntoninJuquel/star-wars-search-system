@@ -12,41 +12,43 @@ import { Label } from "@/components/ui/label";
 import { useCallback, useEffect, useState } from "react";
 import { Search } from "lucide-react";
 import { useLoaderData, useNavigate } from "react-router-dom";
-import { getCollections } from "@/services/api";
 import { LoaderData } from "@/models/LoaderData";
 import { useDebounce } from "use-debounce";
 
+const collections = [
+  "all",
+  "films",
+  "people",
+  "planets",
+  "species",
+  "starships",
+  "vehicles",
+];
+
 export default function SearchBar() {
-  const [collections, setCollections] = useState<string[]>(["all"]);
   const [search, setSearch] = useState("");
   const [collection, setCollection] = useState(collections[0]);
   const [debouncedSearch] = useDebounce(search, 1000);
   const navigate = useNavigate();
 
-  const handleSearch = useCallback((collection: string, search: string) => {
-    let url = `/search`;
-    if (collection !== collections[0]) {
-      url += `/${collection}`;
-    }
-    if (search) {
-      url += `/?search=${search}`;
-    }
-    navigate(url);
-  }, [navigate, collections]);
+  const handleSearch = useCallback(
+    (collection: string, search: string) => {
+      let url = `/search`;
+      if (collection !== collections[0]) {
+        url += `/${collection}`;
+      }
+      if (search) {
+        url += `/?search=${search}`;
+      }
+      navigate(url);
+    },
+    [navigate]
+  );
 
   function onSubmit(e: React.FormEvent) {
     e.preventDefault();
     handleSearch(collection, search);
   }
-
-  useEffect(() => {
-    (async () => {
-      const collections = await getCollections();
-      if (collections) {
-        setCollections([...new Set(["all", ...Object.keys(collections)])]);
-      }
-    })();
-  }, []);
 
   const loaderData = useLoaderData();
 
@@ -58,7 +60,7 @@ export default function SearchBar() {
     if (collection) {
       setCollection(collection);
     }
-  }, [loaderData, collections]);
+  }, [loaderData]);
 
   useEffect(() => {
     handleSearch(collection, debouncedSearch);
