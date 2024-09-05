@@ -31,7 +31,7 @@ export default function SearchResult() {
       return (
         <div
           id="search-result"
-          className="flex flex-col flex-grow overflow-y-auto"
+          className="flex flex-col flex-grow overflow-y-auto bg-white/10 backdrop-blur-lg rounded-lg"
         >
           <div className="flex-grow p-2">
             {collectionData.results.map((item, index) =>
@@ -72,7 +72,7 @@ export default function SearchResult() {
       return (
         <div
           id="search-result"
-          className="flex flex-col flex-grow overflow-y-auto"
+          className="flex flex-col flex-grow overflow-y-auto bg-white/10 backdrop-blur-lg rounded-lg"
         >
           <div className="flex-grow p-2">
             {Object.keys(collectionRecords).map((key, index) => {
@@ -113,5 +113,12 @@ export default function SearchResult() {
     }
   }
 
-  return <div id="search-result">No results found. Please try again.</div>;
+  return (
+    <div
+      id="search-result"
+      className="flex flex-col flex-grow overflow-y-auto bg-white/10 backdrop-blur-lg rounded-lg p-4"
+    >
+      No results found. Please try again.
+    </div>
+  );
 }

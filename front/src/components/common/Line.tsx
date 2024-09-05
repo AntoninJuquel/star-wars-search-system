@@ -9,7 +9,7 @@ export function Line({ label, value }: { label: string; value: string }) {
         <h3>{label}</h3>
         <a
           href={`${getNavigationUrl(url.href).slice(0, -1)}`}
-          className="text-blue-500"
+          className="text-yellow-500 hover:text-yellow-600"
         >
           {location.origin}{navigationUrl}
         </a>

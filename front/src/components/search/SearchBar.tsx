@@ -70,7 +70,7 @@ export default function SearchBar() {
 
   return (
     <div id="searchbar">
-      <Card className="w-full">
+      <Card className="w-full bg-white/10 backdrop-blur-lg">
         <form onSubmit={onSubmit}>
           <CardContent>
             <div className="grid w-full items-center gap-4">

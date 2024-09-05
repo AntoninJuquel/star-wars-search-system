@@ -61,4 +61,32 @@
   body {
     @apply bg-background text-foreground;
   }
+  #root{
+    background-image: url('/background.jpg');
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    margin: 0;
+  }
+  /* width */
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    @apply bg-background;
+    border-radius: 5px;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    @apply bg-primary;
+    border-radius: 5px;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-foreground;
+  }
 }
